@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hello</string>
+    <string name="btn1">添加单词</string>
+    <string name="btn2">开始背诵</string>
+    <string name="btn3">我的</string>
+    <string name="btn4">认识</string>
+    <string name="btn5">不认识</string>
+    <string name="btn6">下一个</string>
+    <string name="lab1">单词</string>
+    <string name="lab2">释义</string>
+    <string name="btn_ok">确定</string>
+</resources>

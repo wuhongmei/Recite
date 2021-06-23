@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Hello</string>
+    <string name="btn1">add</string>
+    <string name="btn2">recite</string>
+    <string name="btn3">mine</string>
+    <string name="btn4">know</string>
+    <string name="btn5">unknow</string>
+    <string name="btn6">next</string>
+    <string name="lab1">EnglishWord</string>
+    <string name="lab2">Explanation</string>
+    <string name="btn_ok">ok</string>
+</resources>
