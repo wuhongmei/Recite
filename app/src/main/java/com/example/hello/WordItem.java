@@ -13,18 +13,18 @@ public class WordItem {
         mean = "";
         weight = 0;
     }
-    public WordItem(String word, String mean) {
+    public WordItem(String word, String mean) { // 添加时使用
         super();
         this.word = word;
         this.mean = mean;
         this.weight = 0;
     }
-    public WordItem(int id, String word, String mean) {
+    public WordItem(int id, String word, String mean, int weight) {  // 修改时使用
         super();
         this.id = id;
         this.word = word;
         this.mean = mean;
-        this.weight = 0;
+        this.weight = weight;
     }
 
     public int getId() {

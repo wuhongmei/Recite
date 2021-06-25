@@ -15,7 +15,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final String TAG = "DetailActivity";
     Intent intent;
     String word,mean,newMean;
-    int idNum;
+    int idNum, weight;
     TextView tex3;
     EditText editText;
     WordItem item;
@@ -32,6 +32,7 @@ public class DetailActivity extends AppCompatActivity {
         idNum = intent.getIntExtra("id_key", 0);
         word = intent.getStringExtra("word_key");
         mean = intent.getStringExtra("mean_key");
+        weight = intent.getIntExtra("weight", 0);
         tex3.setText(word);
         editText.setText(mean);
         dbManager = new DBManager(DetailActivity.this);
@@ -47,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
         Log.i(TAG, "modify: mean=" + newMean);
 
         // 更新数据库数据
-        item = new WordItem(idNum, word, newMean);//更新不改变权重
+        item = new WordItem(idNum, word, newMean, weight);//更新不改变权重
         if(dbManager.update(item)) {
             Toast.makeText(DetailActivity.this, "保存成功！", Toast.LENGTH_SHORT).show();
         }

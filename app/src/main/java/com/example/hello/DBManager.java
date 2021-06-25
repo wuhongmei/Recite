@@ -57,7 +57,7 @@ public class DBManager {
         ContentValues values = new ContentValues();
 //        values.put("word", item.getWord());    // 不修改单词
         values.put("MEAN", item.getMean());
-//        values.put("weight", item.getWeight()); // 不改变权重
+        values.put("weight", item.getWeight());
         int result = db.update(TBNAME, values, "ID=?", new String[]{String.valueOf(item.getId())});
         db.close();
         return result == 1;
@@ -110,19 +110,19 @@ public class DBManager {
         return wordList;
     }
 
-    public WordItem findById(int id){
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query(TBNAME, null, "ID=?", new String[]{String.valueOf(id)}, null, null, null);
-        WordItem wordItem = null;
-        if(cursor!=null && cursor.moveToFirst()){
-            wordItem = new WordItem();
-            wordItem.setId(cursor.getInt(cursor.getColumnIndex("ID")));
-            wordItem.setWord(cursor.getString(cursor.getColumnIndex("WORD")));
-            wordItem.setMean(cursor.getString(cursor.getColumnIndex("MEAN")));
-            wordItem.setWeight(0);
-            cursor.close();
-        }
-        db.close();
-        return wordItem;
-    }
+//    public WordItem findById(int id){
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//        Cursor cursor = db.query(TBNAME, null, "ID=?", new String[]{String.valueOf(id)}, null, null, null);
+//        WordItem wordItem = null;
+//        if(cursor!=null && cursor.moveToFirst()){
+//            wordItem = new WordItem();
+//            wordItem.setId(cursor.getInt(cursor.getColumnIndex("ID")));
+//            wordItem.setWord(cursor.getString(cursor.getColumnIndex("WORD")));
+//            wordItem.setMean(cursor.getString(cursor.getColumnIndex("MEAN")));
+//            wordItem.setWeight(0);
+//            cursor.close();
+//        }
+//        db.close();
+//        return wordItem;
+//    }
 }

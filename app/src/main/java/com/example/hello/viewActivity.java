@@ -28,10 +28,6 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
     ListView listView1;
     WordItemAdapter adapter;
     DBManager dbManager;
-    WordItem wordItem;
-    int idNum;
-    String wordStr, meanStr;
-    public static viewActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,13 +80,15 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
         Log.i(TAG, "onItemClick: position=" + position);
         Object itemAtPosition = listView1.getItemAtPosition(position);
 
-        wordItem = (WordItem)itemAtPosition;
-        idNum = wordItem.getId();
-        wordStr = wordItem.getWord();
-        meanStr = wordItem.getMean();
+        WordItem wordItem = (WordItem)itemAtPosition;
+        int idNum = wordItem.getId();
+        String wordStr = wordItem.getWord();
+        String meanStr = wordItem.getMean();
+        int weight = wordItem.getWeight();
         Log.i(TAG, "onItemClick: idNum=" + idNum);
         Log.i(TAG, "onItemClick: wordStr=" + wordStr);
         Log.i(TAG, "onItemClick: meanStr=" + meanStr);
+        Log.i(TAG, "onItemClick: weight=" + weight);
 
         //打开窗口，进行参数传递
         Intent intent = new Intent(this, DetailActivity.class);
@@ -98,6 +96,7 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
         intent.putExtra("id_key", idNum);
         intent.putExtra("word_key", wordStr);
         intent.putExtra("mean_key", meanStr);
+        intent.putExtra("weight", weight);
 //        startActivity(intent);
         startActivityForResult(intent,4); //打开一个可以返回数据的窗口
     }
@@ -132,7 +131,7 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
         return true; //不触发点击操作
     }
 
-    public boolean deleteAll(View view) {
+    public boolean deleteAll() {
         //删除全部单词
         Log.i(TAG, "deleteAll：全部删除操作");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

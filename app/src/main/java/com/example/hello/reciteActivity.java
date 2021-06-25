@@ -9,31 +9,70 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class reciteActivity extends AppCompatActivity {
 
     TextView tex1, tex2;
-    DBManager dbManager = new DBManager(reciteActivity.this);
-    int i; //存储当前单词的ID
+    DBManager dbManager;
     WordItem item;
-
-    //之后做按weight大小展示
+    List<WordItem> wordList;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recite);
+
+        dbManager = new DBManager(reciteActivity.this);
+        wordList = dbManager.listAll();
+        // 按weight排序
+        sort(wordList, 0, wordList.size() - 1);
         tex1 = findViewById(R.id.text_1);
         tex2 = findViewById(R.id.text_2);
-        //获取背诵数据库加入控件
-        i=1;
-        item = dbManager.findById(1);
+        // 获取背诵数据库加入控件
+        index = 0;
+        item = wordList.get(index);
         tex1.setText(item.getWord());
     }
 
-    //实现三个按钮功能
-    //know
+    // 快速排序
+    public static void sort(List<WordItem> wordList, int p, int r) {
+        int i = p;
+        int j = r;
+        if(i < j){
+            WordItem stan;         // 基准单词
+            int k = wordList.get(i).getWeight();  // 以第一个单词的weight作为基准
+            while (i < j) {
+                while (i < j && wordList.get(j).getWeight() < k) { // 从右往左找出大的数
+                    j--;
+                }
+                while (i < j && wordList.get(i).getWeight() >= k) { //从左往右找出小的数
+                    i++;
+                }
+                if (i >= j) break;
+
+                // 交换
+                WordItem wordItem = wordList.get(i);
+                wordList.set(i, wordList.get(j));
+                wordList.set(j, wordItem);
+            }
+            // 交换stan
+            stan = wordList.get(i);
+            wordList.set(i, wordList.get(p));
+            wordList.set(p, stan);
+
+            //对左边排序
+            sort(wordList, p, i-1);
+            //对右边排序
+            sort(wordList, i+1, r);
+        }
+    }
+
+    // 实现三个按钮功能
+    // know
     public void know(View btn){
-        item = dbManager.findById(i);
+        item = wordList.get(index);
         tex2.setText(item.getMean());
         if(item.getWeight()>1){
             item.setWeight(item.getWeight()-1);
@@ -41,19 +80,19 @@ public class reciteActivity extends AppCompatActivity {
         dbManager.update(item);
     }
 
-    //unknow
-    public void unknow(View btn){
-        item = dbManager.findById(i);
+    // unknown
+    public void unknown(View btn){
+        item = wordList.get(index);
         tex2.setText(item.getMean());
         item.setWeight(item.getWeight()+1);
         dbManager.update(item);
     }
 
-    //next
+    // next
     public void next(View btn){
-        i++;
+        index++;
         try{
-            item = dbManager.findById(i);
+            item = wordList.get(index);
             tex1.setText(item.getWord());
             tex2.setText("");
         } catch (Exception e) {
@@ -61,7 +100,7 @@ public class reciteActivity extends AppCompatActivity {
         }
     }
 
-    //back
+    // back
     public void back(View btn) {
         Intent MainPage = new Intent(this, MainActivity.class);
         startActivity(MainPage);
