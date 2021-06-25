@@ -11,27 +11,27 @@
         android:layout_width="273dp"
         android:layout_height="53dp"
         android:layout_marginTop="64dp"
-        android:autofillHints="number"
+        android:autofillHints="text"
         android:gravity="center"
         android:hint="@string/lab1"
-        android:inputType="numberDecimal"
-        android:textSize="40sp"
+        android:inputType="text"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.094"
+        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.017" />
+        app:layout_constraintVertical_bias="0.008" />
 
     <EditText
         android:id="@+id/edit_C"
-        android:layout_width="384dp"
-        android:layout_height="412dp"
-        android:autofillHints="number"
+        android:layout_width="319dp"
+        android:layout_height="370dp"
+        android:autofillHints="text"
         android:gravity="center"
         android:hint="@string/lab2"
-        android:inputType="numberDecimal"
-        android:textSize="40sp"
+        android:inputType="textMultiLine"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
@@ -49,18 +49,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_C"
-        app:layout_constraintVertical_bias="0.441" />
+        app:layout_constraintVertical_bias="0.181" />
 
     <Button
         android:id="@+id/Button_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@android:string/ok"
         android:onClick="okToRun"
+        android:text="@android:string/ok"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toEndOf="@+id/edit_E"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.108" />
+        app:layout_constraintVertical_bias="0.101" />
+
+    <Button
+        android:id="@+id/button_back1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_back"
+        android:onClick="back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_add"
+        app:layout_constraintVertical_bias="0.326" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

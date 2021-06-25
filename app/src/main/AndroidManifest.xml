@@ -17,25 +17,28 @@
         tools:targetApi="m">
         <activity
             android:name=".DetailActivity"
-            android:theme="@style/Theme.AppCompat.Dialog" >
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:label="" >
         </activity>
-        <activity android:name=".viewActivity" />
-        <activity android:name=".reciteActivity" />
-        <activity android:name=".addActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".viewActivity" android:label="查看" />
+        <activity android:name=".reciteActivity" android:label="背单词" />
         <activity
-            android:name=".MainActivity"
-            android:label="背单词">
+            android:name=".addActivity"
+            android:label="添加" >
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="背单词">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

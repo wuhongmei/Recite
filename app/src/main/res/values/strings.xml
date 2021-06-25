@@ -8,5 +8,8 @@
     <string name="btn6">next</string>
     <string name="lab1">EnglishWord</string>
     <string name="lab2">Explanation</string>
-    <string name="btn_ok">ok</string>
+    <string name="btn_ok">translate</string>
+    <string name="btn_back">back</string>
+    <string name="btn_modify">save</string>
+    <string name="btn_delete">delete all</string>
 </resources>

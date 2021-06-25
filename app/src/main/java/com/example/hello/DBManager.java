@@ -28,17 +28,17 @@ public class DBManager {
         db.close();
     }
 
-    public void addAll(List<WordItem> list){
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        for (WordItem item : list) {
-            ContentValues values = new ContentValues();
-            values.put("word", item.getWord());
-            values.put("mean", item.getMean());
-            values.put("weight", 0);
-            db.insert(TBNAME, null, values);
-        }
-        db.close();
-    }
+//    public void addAll(List<WordItem> list){
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        for (WordItem item : list) {
+//            ContentValues values = new ContentValues();
+//            values.put("word", item.getWord());
+//            values.put("mean", item.getMean());
+//            values.put("weight", 0);
+//            db.insert(TBNAME, null, values);
+//        }
+//        db.close();
+//    }
 
     public void deleteAll(){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -52,14 +52,41 @@ public class DBManager {
         db.close();
     }
 
-    public void update(WordItem item){
+    public boolean update(WordItem item){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("word", item.getWord());
-        values.put("mean", item.getMean());
-        values.put("weight", item.getWeight());
-        db.update(TBNAME, values, "ID=?", new String[]{String.valueOf(item.getId())});
+//        values.put("word", item.getWord());    // 不修改单词
+        values.put("MEAN", item.getMean());
+//        values.put("weight", item.getWeight()); // 不改变权重
+        int result = db.update(TBNAME, values, "ID=?", new String[]{String.valueOf(item.getId())});
         db.close();
+        return result == 1;
+    }
+
+    public boolean isExist(WordItem item){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.query(TBNAME, null, null, null, null, null, null);
+        if(cursor!=null){
+            while(cursor.moveToNext()){
+                if(item.getWord().equals(cursor.getString(cursor.getColumnIndex("WORD")))){
+                    break;
+                }
+            }
+            if(cursor.isAfterLast()){
+                cursor.close();
+                db.close();
+                return false;
+            }
+            else {
+                cursor.close();
+                db.close();
+                return true;
+            }
+        }
+        else {
+            db.close();
+            return false;
+        }
     }
 
     public List<WordItem> listAll(){
@@ -73,7 +100,7 @@ public class DBManager {
                 item.setId(cursor.getInt(cursor.getColumnIndex("ID")));
                 item.setWord(cursor.getString(cursor.getColumnIndex("WORD")));
                 item.setMean(cursor.getString(cursor.getColumnIndex("MEAN")));
-                item.setWeight(0);
+                item.setWeight(cursor.getInt(cursor.getColumnIndex("WEIGHT")));
 
                 wordList.add(item);
             }

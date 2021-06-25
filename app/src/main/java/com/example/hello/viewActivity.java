@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
+//import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+//import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,13 +27,17 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
     Handler handler;
     ListView listView1;
     WordItemAdapter adapter;
+    DBManager dbManager;
+    WordItem wordItem;
+    int idNum;
+    String wordStr, meanStr;
+    public static viewActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
 
-//        SharedPreferences sp = getSharedPreferences("myword", Context.MODE_PRIVATE);
         listView1 = findViewById(R.id.myList1);
         ProgressBar progressBar1 = findViewById(R.id.progressBar1);
         listView1.setOnItemClickListener(this); //点击事件监听
@@ -46,8 +50,8 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
                 Log.i(TAG, "handleMessage: 收到消息" + msg.what);
                 if (msg.what == 2) {  // 确认对象
                     //自定义适配器、自定义布局
-                    ArrayList<WordItem> retList = (ArrayList<WordItem>)msg.obj;
-                    adapter = new WordItemAdapter(viewActivity.this, R.layout.list_item, retList);
+                    ArrayList<WordItem> wrdList = (ArrayList<WordItem>)msg.obj;
+                    adapter = new WordItemAdapter(viewActivity.this, R.layout.list_item, wrdList);
                     listView1.setAdapter(adapter);
                     Toast.makeText(viewActivity.this, "Update Over", Toast.LENGTH_SHORT).show();
                     //处理显示与隐藏
@@ -66,13 +70,12 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
     @Override
     public void run() {
         Log.i(TAG, "run: ...");
-        List<WordItem> wrd = new ArrayList<>();
         Log.i(TAG, "run: 从数据库中获取数据");
-        DBManager dbManager = new DBManager(viewActivity.this);
-        wrd.addAll(dbManager.listAll());
+        dbManager = new DBManager(viewActivity.this);
+        List<WordItem> wrd = new ArrayList<>(dbManager.listAll());
 
         // 将消息返回给主线程
-        Message msg = handler.obtainMessage(10,wrd);
+        Message msg = handler.obtainMessage(2,wrd);
         handler.sendMessage(msg);
     }
 
@@ -81,34 +84,71 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
         Log.i(TAG, "onItemClick: position=" + position);
         Object itemAtPosition = listView1.getItemAtPosition(position);
 
-        WordItem rateItem = (WordItem)itemAtPosition;
-        String wordStr = rateItem.getWord();
-        String meanStr = rateItem.getMean();
-        Log.i(TAG, "onItemClick: titleStr=" + wordStr);
-        Log.i(TAG, "onItemClick: detailStr=" + meanStr);
+        wordItem = (WordItem)itemAtPosition;
+        idNum = wordItem.getId();
+        wordStr = wordItem.getWord();
+        meanStr = wordItem.getMean();
+        Log.i(TAG, "onItemClick: idNum=" + idNum);
+        Log.i(TAG, "onItemClick: wordStr=" + wordStr);
+        Log.i(TAG, "onItemClick: meanStr=" + meanStr);
 
         //打开窗口，进行参数传递
-        Intent detail = new Intent(this, DetailActivity.class);
+        Intent intent = new Intent(this, DetailActivity.class);
         //参数传递
-        detail.putExtra("word_key", wordStr);
-        detail.putExtra("mean_key", meanStr);
-        startActivity(detail);
+        intent.putExtra("id_key", idNum);
+        intent.putExtra("word_key", wordStr);
+        intent.putExtra("mean_key", meanStr);
+//        startActivity(intent);
+        startActivityForResult(intent,4); //打开一个可以返回数据的窗口
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        //返回后更新数据
+        if(requestCode==4 && resultCode==4){
+            dbManager = new DBManager(viewActivity.this);
+            ArrayList<WordItem> wrd = new ArrayList<>(dbManager.listAll());
+            adapter = new WordItemAdapter(viewActivity.this, R.layout.list_item, wrd);
+            listView1.setAdapter(adapter); // 重新设置ListView的数据适配器
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         //长按操作
         Log.i(TAG, "onItemLongClick：长按操作");
-        WordItem wordItem = (WordItem) listView1.getItemAtPosition(position);
+        WordItem item = (WordItem) listView1.getItemAtPosition(position);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示")
-                .setMessage("请确认是否删除当前数据")
+                .setMessage("请确认是否删除该单词？")
                 .setPositiveButton("是", (dialog, which) -> {
                     Log.i(TAG, "onClick：对话框事件处理");
-                    adapter.remove(wordItem);
+                    adapter.remove(item);
+                    dbManager.delete(item.getId());
                 }).setNegativeButton("否", null);
         builder.create().show();
         return true; //不触发点击操作
+    }
+
+    public boolean deleteAll(View view) {
+        //删除全部单词
+        Log.i(TAG, "deleteAll：全部删除操作");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示")
+                .setMessage("请确认是否删除所有单词？")
+                .setPositiveButton("是", (dialog, which) -> {
+                    Log.i(TAG, "onClick：对话框事件处理");
+                    adapter.clear();
+                    dbManager.deleteAll();
+                }).setNegativeButton("否", null);
+        builder.create().show();
+        return true;
+    }
+
+    public void back(View btn) {
+        Intent MainPage = new Intent(this, MainActivity.class);
+        startActivity(MainPage);
     }
 }

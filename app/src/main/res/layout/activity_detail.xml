@@ -12,16 +12,19 @@
         android:layout_height="wrap_content"
         android:text="@string/lab1"
         android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/text_4"
+        app:layout_constraintBottom_toTopOf="@+id/edit_mod"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.843" />
 
-    <TextView
-        android:id="@+id/text_4"
-        android:layout_width="303dp"
-        android:layout_height="404dp"
-        android:text="@string/lab2"
+    <EditText
+        android:id="@+id/edit_mod"
+        android:layout_width="277dp"
+        android:layout_height="313dp"
+        android:autofillHints="text"
+        android:hint="@string/lab2"
+        android:inputType="textMultiLine"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,4 +32,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.569" />
+
+    <Button
+        android:id="@+id/button_modify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/btn_modify"
+        android:onClick="modify"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_mod"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

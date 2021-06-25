@@ -19,6 +19,13 @@ public class WordItem {
         this.mean = mean;
         this.weight = 0;
     }
+    public WordItem(int id, String word, String mean) {
+        super();
+        this.id = id;
+        this.word = word;
+        this.mean = mean;
+        this.weight = 0;
+    }
 
     public int getId() {
         return id;
