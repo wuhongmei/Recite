@@ -64,6 +64,7 @@ public class addActivity extends AppCompatActivity implements Runnable {
             if(!dbManager.isExist(item)){  //如果word不在数据库中，则添加
                 dbManager.add(item);
                 Toast.makeText(addActivity.this, "添加成功！", Toast.LENGTH_SHORT).show();
+                wordEdit.setText("");
             }
             else Toast.makeText(addActivity.this, "已经添加过啦！", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {

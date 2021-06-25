@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-//import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,17 +26,25 @@ public class reciteActivity extends AppCompatActivity {
         dbManager = new DBManager(reciteActivity.this);
         wordList = dbManager.listAll();
         // 按weight排序
-        sort(wordList, 0, wordList.size() - 1);
+        Quicksort(wordList, 0, wordList.size() - 1);
         tex1 = findViewById(R.id.text_1);
         tex2 = findViewById(R.id.text_2);
         // 获取背诵数据库加入控件
         index = 0;
-        item = wordList.get(index);
-        tex1.setText(item.getWord());
+        try{
+            item = wordList.get(index);
+            tex1.setText(item.getWord());
+        } catch (Exception ex){
+            tex2.setText("还没有添加单词哦！");
+            //禁用button
+            findViewById(R.id.button_4).setEnabled(false);
+            findViewById(R.id.button_5).setEnabled(false);
+            findViewById(R.id.button_6).setEnabled(false);
+        }
     }
 
     // 快速排序
-    public static void sort(List<WordItem> wordList, int p, int r) {
+    public static void Quicksort(List<WordItem> wordList, int p, int r) {
         int i = p;
         int j = r;
         if(i < j){
@@ -63,9 +70,9 @@ public class reciteActivity extends AppCompatActivity {
             wordList.set(p, stan);
 
             //对左边排序
-            sort(wordList, p, i-1);
+            Quicksort(wordList, p, i-1);
             //对右边排序
-            sort(wordList, i+1, r);
+            Quicksort(wordList, i+1, r);
         }
     }
 

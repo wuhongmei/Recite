@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-//import android.content.Context;
 import android.content.Intent;
-//import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class viewActivity extends AppCompatActivity implements Runnable, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
@@ -47,6 +46,7 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
                 if (msg.what == 2) {  // 确认对象
                     //自定义适配器、自定义布局
                     ArrayList<WordItem> wrdList = (ArrayList<WordItem>)msg.obj;
+                    wrdList = Sort(wrdList);
                     adapter = new WordItemAdapter(viewActivity.this, R.layout.list_item, wrdList);
                     listView1.setAdapter(adapter);
                     Toast.makeText(viewActivity.this, "Update Over", Toast.LENGTH_SHORT).show();
@@ -73,6 +73,24 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
         // 将消息返回给主线程
         Message msg = handler.obtainMessage(2,wrd);
         handler.sendMessage(msg);
+    }
+
+    // 快速排序
+    public static ArrayList<WordItem> Sort(ArrayList<WordItem> wordList) {
+        List<String> list = new ArrayList<>();
+        ArrayList<WordItem> sortedList = new ArrayList<>();
+        for(WordItem wordItem: wordList){
+            list.add(wordItem.getWord());
+        }
+        Collections.sort(list);
+        for(String str: list){
+            for (WordItem wordItem: wordList){
+                if(wordItem.getWord().equals(str)){
+                    sortedList.add(wordItem);
+                }
+            }
+        }
+        return sortedList;
     }
 
     @Override
@@ -131,7 +149,7 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
         return true; //不触发点击操作
     }
 
-    public boolean deleteAll() {
+    public void deleteAll(View btn) {
         //删除全部单词
         Log.i(TAG, "deleteAll：全部删除操作");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -143,7 +161,6 @@ public class viewActivity extends AppCompatActivity implements Runnable, Adapter
                     dbManager.deleteAll();
                 }).setNegativeButton("否", null);
         builder.create().show();
-        return true;
     }
 
     public void back(View btn) {

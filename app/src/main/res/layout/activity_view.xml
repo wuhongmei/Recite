@@ -19,8 +19,8 @@
 
     <ListView
         android:id="@+id/myList1"
-        android:layout_width="353dp"
-        android:layout_height="496dp"
+        android:layout_width="329dp"
+        android:layout_height="482dp"
         android:layout_marginBottom="120dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,18 +41,18 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myList1"
-        app:layout_constraintVertical_bias="0.319" />
+        app:layout_constraintVertical_bias="0.36" />
 
     <Button
         android:id="@+id/button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/btn_delete"
+        android:layout_marginTop="12dp"
         android:onClick="deleteAll"
+        android:text="@string/btn_delete"
         app:layout_constraintBottom_toTopOf="@+id/myList1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintHorizontal_bias="0.944"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
