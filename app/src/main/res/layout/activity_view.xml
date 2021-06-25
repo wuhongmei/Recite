@@ -19,16 +19,16 @@
 
     <ListView
         android:id="@+id/myList1"
-        android:layout_width="329dp"
-        android:layout_height="482dp"
-        android:layout_marginBottom="120dp"
+        android:layout_width="330dp"
+        android:layout_height="510dp"
+        android:layout_marginBottom="100dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.865" />
+        app:layout_constraintVertical_bias="0.8" />
 
     <Button
         android:id="@+id/button_back2"
@@ -41,7 +41,7 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myList1"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <Button
         android:id="@+id/button_delete"
