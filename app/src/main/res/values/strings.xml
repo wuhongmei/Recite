@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hello</string>
+    <string name="app_name">点点单词</string>
     <string name="btn1">add</string>
     <string name="btn2">recite</string>
     <string name="btn3">mine</string>

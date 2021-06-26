@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Hello</string>
+    <string name="app_name">点点单词</string>
     <string name="btn1">添加单词</string>
     <string name="btn2">开始背诵</string>
     <string name="btn3">我的</string>
